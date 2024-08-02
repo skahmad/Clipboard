@@ -1,5 +1,7 @@
 package creator.android.clipboard;
 
+import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,12 +16,20 @@ import creator.android.clipboard.placeholder.ListItem;
 
 public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> {
     private List<ListItem> items;
-    private View.OnClickListener clickListener;
+    private Context context;
 
     // Constructor
-    public ListAdapter(List<ListItem> items) {
+    // Constructor
+    public ListAdapter(Context context, List<ListItem> items) {
+        this.context = context;
         this.items = items;
     }
+
+
+    public void updateData(List<ListItem> newItemList) {
+        this.items = newItemList;
+    }
+
 
     @NonNull
     @Override
@@ -28,19 +38,24 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> {
         return new ViewHolder(view);
     }
 
-    // Set the click listener
-    public void setOnItemClickListener(View.OnClickListener listener) {
-        this.clickListener = listener;
-    }
-
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         ListItem item = items.get(position);
-        holder.text1.setText(item.getTitle());
-        holder.text2.setText(item.getDescription());
+        holder.text1.setText(item.getName());
+        holder.text2.setText(item.getCount()==0? "No account added": item.getCount() + " accounts");
 
         holder.itemView.setTag(position);
-        holder.itemView.setOnClickListener(clickListener);
+
+        // Set a click listener on the entire item view
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Create an intent to start the ContactDetailsActivity
+                Intent intent = new Intent(context, AccountDetailsActivity.class);
+                intent.putExtra("name", item.getName());
+                context.startActivity(intent);
+            }
+        });
     }
 
     @Override
