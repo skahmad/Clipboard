@@ -11,6 +11,18 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
     // Table name
     public static final String TABLE_ACCOUNT = "accounts";
     public static final String TABLE_INFORMATION = "information";
+    public static final String[] TABLE_INFORMATION_COLUMNS = {
+            "id", "account_id",
+            "name", "details",
+            "createdAt", "updatedAt", "deletedAt",
+            "isDeleted"
+    };
+
+    public static final String[] TABLE_ACCOUNT_COLUMNS = {
+            "id", "count",
+            "name",
+            "createdAt", "updatedAt"
+    };
 
     // Table columns
     @Deprecated

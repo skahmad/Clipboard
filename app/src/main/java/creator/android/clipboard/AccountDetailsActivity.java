@@ -1,14 +1,26 @@
 package creator.android.clipboard;
 
+import android.content.ClipData;
+import android.content.ClipboardManager;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.ContextMenu;
 import android.view.LayoutInflater;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import creator.android.clipboard.R;
+import creator.android.clipboard.placeholder.Information;
+
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -45,9 +57,12 @@ public class AccountDetailsActivity extends AppCompatActivity {
         Button addButton = findViewById(R.id.addButton);
         accountsRecyclerView = findViewById(R.id.accountsRecyclerView);
 
+        // register for context menu
+        //registerForContextMenu(accountsRecyclerView);
+
         // Initialize RecyclerView
         accountsRecyclerView.setLayoutManager(new LinearLayoutManager(this));
-        myAdapter = new InformationAdapter(this, informationDataSource.getInformations(accountId));
+        myAdapter = new InformationAdapter(this, informationDataSource.getInformations(accountId), this);
         accountsRecyclerView.setAdapter(myAdapter);
 
         // Handle Add Button Click
@@ -55,6 +70,88 @@ public class AccountDetailsActivity extends AppCompatActivity {
             openAddInformationDialog();
         });
     }
+
+
+    public void deleteInformation(int id) {
+        informationDataSource.delete(id);
+    }
+
+    private void saveEditedData(int id, String key, String value) {
+        informationDataSource.update(id, key, value);
+        Toast.makeText(AccountDetailsActivity.this, "Information updated", Toast.LENGTH_SHORT).show();
+    }
+    public void openEditDialog(int position) {
+        // Get the item data based on position
+        Information information = informationDataSource.getInformation(position);
+
+        String title = information.getName();
+        String key = information.getName();
+        String value = information.getDetails();
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Edit " + title);
+
+        // Inflate the custom layout with key and value fields
+        View viewInflated = LayoutInflater.from(this).inflate(R.layout.information_edit_dialog, (ViewGroup) findViewById(android.R.id.content), false);
+        final EditText inputKey = viewInflated.findViewById(R.id.input_key);
+        final EditText inputValue = viewInflated.findViewById(R.id.input_value);
+
+        inputKey.setText(key);
+        inputValue.setText(value);
+
+        builder.setView(viewInflated);
+
+        builder.setPositiveButton("Save", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                // Save the data
+                String newKey = inputKey.getText().toString();
+                String newValue = inputValue.getText().toString();
+                saveEditedData(position, newKey, newValue);
+                dialog.dismiss();
+            }
+        });
+
+        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                dialog.cancel();
+            }
+        });
+
+        AlertDialog dialog = builder.create();
+        dialog.show();
+    }
+
+    public void openViewDialog(int position) {
+        Information information = informationDataSource.getInformation(position);
+
+        // Get the item data based on position
+        String title = information.getName();
+        String description = information.getDetails();
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle(title);
+        builder.setMessage(description);
+
+        builder.setPositiveButton("Close", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                dialog.dismiss();
+            }
+        });
+
+        builder.setNeutralButton("Copy", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                // Copy to clipboard
+                ClipboardManager clipboard = (ClipboardManager) getSystemService(CLIPBOARD_SERVICE);
+                ClipData clip = ClipData.newPlainText("Description", description);
+                clipboard.setPrimaryClip(clip);
+                Toast.makeText(getApplicationContext(), "Copied to clipboard", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        AlertDialog dialog = builder.create();
+        dialog.show();
+    }
+
 
     private void openAddInformationDialog() {
         LayoutInflater layoutInflater = LayoutInflater.from(this);

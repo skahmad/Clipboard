@@ -1,6 +1,5 @@
 package creator.android.clipboard;
 
-import android.database.Cursor;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,23 +7,12 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.EditText;
 import android.widget.Toast;
-
 import androidx.appcompat.app.AlertDialog;
-import androidx.navigation.Navigation;
-import androidx.navigation.NavController;
-import androidx.navigation.ui.NavigationUI;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import androidx.navigation.ui.AppBarConfiguration;
-import com.google.android.material.snackbar.Snackbar;
-
-import java.util.ArrayList;
 import java.util.List;
-
 import creator.android.clipboard.data.AccountDataSource;
-import creator.android.clipboard.data.AccountRepository;
-import creator.android.clipboard.data.MyDatabaseHelper;
 import creator.android.clipboard.databinding.ActivityMainBinding;
 import creator.android.clipboard.placeholder.ListItem;
 

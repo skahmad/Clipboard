@@ -17,6 +17,9 @@ public class ListItem {
         return id;
     }
 
+    public int getIntId() {
+        return Integer.parseInt(id);
+    }
     public ListItem setCount(Integer count) {
         this.count = count;
         return this;

@@ -104,6 +104,29 @@ public class AccountRepository {
         return database.insert(MyDatabaseHelper.TABLE_INFORMATION, null, values);
     }
 
+    public long updateInformation(int accountId, String key, String value) {
+        ContentValues values = new ContentValues();
+        Date d = new Date();
+        values.put("name", key);
+        values.put("updatedAt", d.toString());
+        values.put("details", value);
+
+        return database.update(
+                MyDatabaseHelper.TABLE_INFORMATION,
+                values,
+                "id" + " = ?",
+                new String[]{String.valueOf(accountId)}
+        );
+    }
+
+    public void deleteInformation(long id) {
+        database.delete(
+                MyDatabaseHelper.TABLE_INFORMATION,
+                "id" + " = ?",
+                new String[]{String.valueOf(id)}
+        );
+    }
+
     public ListItem getAccount(Integer id) {
         Cursor cursor = database.query(
                 MyDatabaseHelper.TABLE_ACCOUNT,
@@ -130,6 +153,50 @@ public class AccountRepository {
             return item;
         }
         return null;
+    }
+
+
+    public Information getInformation(Integer id) {
+        Cursor cursor = database.query(
+                MyDatabaseHelper.TABLE_INFORMATION,
+                MyDatabaseHelper.TABLE_INFORMATION_COLUMNS,
+                "id = ?",
+                new String[]{String.valueOf(id)},
+                null,
+                null,
+                null,
+                "1" // Limit the result to 1
+        );
+
+        if(cursor != null && cursor.moveToFirst()) {
+            String iid = cursor.getString(cursor.getColumnIndex("id"));
+            int account = cursor.getInt(cursor.getColumnIndex("account_id"));
+            String name = cursor.getString(cursor.getColumnIndex("name"));
+            String details = cursor.getString(cursor.getColumnIndex("details"));
+            String createdAt = cursor.getString(cursor.getColumnIndex("createdAt"));
+            String updatedAt = cursor.getString(cursor.getColumnIndex("updatedAt"));
+
+            Information information = new Information(account);
+            information.setName(name)
+                    .setDetails(details)
+                    .setId(Integer.valueOf(iid))
+                    .setUpdatedAt(updatedAt)
+                    .setCreatedAt(createdAt);
+            return information;
+        }
+        return null;
+    }
+
+    public void decrementInformation(Integer accountId, int count) {
+        ContentValues values = new ContentValues();
+        values.put("count", (count-1));
+
+        database.update(
+                MyDatabaseHelper.TABLE_ACCOUNT,
+                values,
+                "id" + " = ?",
+                new String[]{String.valueOf(accountId)}
+        );
     }
 
     public void incrementInformation(Integer accountId, int count) {

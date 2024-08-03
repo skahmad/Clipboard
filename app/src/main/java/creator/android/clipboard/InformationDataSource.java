@@ -59,4 +59,19 @@ public class InformationDataSource {
             accountRepository.incrementInformation(accountId, item.getCount());
         }
     }
+
+    public void update(int id, String key, String value) {
+        accountRepository.updateInformation(id, key, value);
+    }
+
+    public Information getInformation(int id) {
+        return accountRepository.getInformation(id);
+    }
+
+    public void delete(int id) {
+        Information information = accountRepository.getInformation(id);
+        ListItem account = accountRepository.getAccount(information.getAccountId());
+        accountRepository.deleteInformation(id);
+        accountRepository.decrementInformation(account.getIntId(), account.getCount());
+    }
 }
