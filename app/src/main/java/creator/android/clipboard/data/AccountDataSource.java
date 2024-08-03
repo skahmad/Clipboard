@@ -24,7 +24,6 @@ public class AccountDataSource {
 
     }
 
-    public void addDetails(String key, String value) {}
 
     public List<ListItem> getItems() {
         List<ListItem> items = new ArrayList<>();

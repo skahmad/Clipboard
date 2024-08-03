@@ -3,7 +3,8 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:padding="16dp"
+    android:paddingVertical="6dp"
+    android:paddingHorizontal="8dp"
     android:background="@drawable/ripple_effect">
 
     <TextView
@@ -19,5 +20,5 @@
         android:layout_height="wrap_content"
         android:text="Line 2"
         android:textAppearance="?android:attr/textAppearanceSmall"
-        android:layout_marginTop="4dp" />
+        android:layout_marginTop="8px" />
 </LinearLayout>

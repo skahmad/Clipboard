@@ -17,6 +17,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import creator.android.clipboard.placeholder.Information;
 import creator.android.clipboard.placeholder.ListItem;
 
 public class AccountRepository {
@@ -75,6 +76,71 @@ public class AccountRepository {
                 MyDatabaseHelper.TABLE_ACCOUNT,
                 "id" + " = ?",
                 new String[]{String.valueOf(id)}
+        );
+    }
+
+    public Cursor getAllInformations(Integer accountId) {
+        return database.query(
+                MyDatabaseHelper.TABLE_INFORMATION,
+                new String[]{"id", "account_id", "name", "details", "createdAt", "updatedAt"},
+                "account_id = ?",        // Selection clause (WHERE clause)
+                new String[]{String.valueOf(accountId)},
+                null,
+                null,
+                null
+        );
+    }
+
+    public long addInformation(Integer accountId, Information information) {
+        ContentValues values = new ContentValues();
+        Date d = new Date();
+        values.put("account_id", accountId);
+        values.put("name", information.getName());
+        values.put("createdAt", d.toString());
+        values.put("updatedAt", d.toString());
+        values.put("details", information.getDetails());
+        values.put("deletedAt", d.toString());
+        values.put("isDeleted", 0);
+        return database.insert(MyDatabaseHelper.TABLE_INFORMATION, null, values);
+    }
+
+    public ListItem getAccount(Integer id) {
+        Cursor cursor = database.query(
+                MyDatabaseHelper.TABLE_ACCOUNT,
+                new String[]{"id", "name", "count", "createdAt", "updatedAt"},
+                "id = ?",
+                new String[]{String.valueOf(id)},
+                null,
+                null,
+                null,
+                "1" // Limit the result to 1
+        );
+
+        if(cursor != null && cursor.moveToFirst()) {
+            String iid = cursor.getString(cursor.getColumnIndex("id"));
+            String name = cursor.getString(cursor.getColumnIndex("name"));
+            Integer count = cursor.getInt(cursor.getColumnIndex("count"));
+            String createdAt = cursor.getString(cursor.getColumnIndex("createdAt"));
+            String updatedAt = cursor.getString(cursor.getColumnIndex("updatedAt"));
+
+            ListItem item = new ListItem(iid, name);
+            item.setCount(count)
+                    .setUpdatedAt(updatedAt)
+                    .setCreatedAt(createdAt);
+            return item;
+        }
+        return null;
+    }
+
+    public void incrementInformation(Integer accountId, int count) {
+        ContentValues values = new ContentValues();
+        values.put("count", (count+1));
+
+        database.update(
+                MyDatabaseHelper.TABLE_ACCOUNT,
+                values,
+                "id" + " = ?",
+                new String[]{String.valueOf(accountId)}
         );
     }
 }

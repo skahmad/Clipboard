@@ -6,8 +6,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.widget.TintTypedArray;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
@@ -53,6 +55,10 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> {
                 // Create an intent to start the ContactDetailsActivity
                 Intent intent = new Intent(context, AccountDetailsActivity.class);
                 intent.putExtra("name", item.getName());
+                intent.putExtra("count", item.getCount());
+                intent.putExtra("accountId", item.getId());
+
+                System.out.println(item.getName() + ":" + item.getId());
                 context.startActivity(intent);
             }
         });
