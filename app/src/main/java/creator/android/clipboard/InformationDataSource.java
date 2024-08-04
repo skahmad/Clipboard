@@ -74,4 +74,29 @@ public class InformationDataSource {
         accountRepository.deleteInformation(id);
         accountRepository.decrementInformation(account.getIntId(), account.getCount());
     }
+
+    public List<Information> findByName(String text, int accountId) {
+        Cursor cursor = accountRepository.getInformationByNameContains(accountId, text);
+        List<Information> items = new ArrayList<>();
+
+        while (cursor.moveToNext()) {
+            String id = cursor.getString(cursor.getColumnIndex("id"));
+            //String accountId = cursor.getString(cursor.getColumnIndex("account_id"));
+            String name = cursor.getString(cursor.getColumnIndex("name"));
+            String details = cursor.getString(cursor.getColumnIndex("details"));
+            String createdAt = cursor.getString(cursor.getColumnIndex("createdAt"));
+            String updatedAt = cursor.getString(cursor.getColumnIndex("updatedAt"));
+
+            Information information = new Information(accountId);
+            information.setDetails(details)
+                    .setId(Integer.parseInt(id))
+                    .setName(name)
+                    .setUpdatedAt(updatedAt)
+                    .setCreatedAt(createdAt);
+
+            items.add(information);
+        }
+        cursor.close();
+        return items;
+    }
 }

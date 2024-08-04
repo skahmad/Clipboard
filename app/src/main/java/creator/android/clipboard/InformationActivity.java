@@ -2,43 +2,36 @@ package creator.android.clipboard;
 
 import android.content.ClipData;
 import android.content.ClipboardManager;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-
 import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.snackbar.Snackbar;
-
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
-
+import androidx.appcompat.widget.SearchView;
 import androidx.core.content.ContextCompat;
-import androidx.navigation.NavController;
-import androidx.navigation.Navigation;
-import androidx.navigation.ui.AppBarConfiguration;
-import androidx.navigation.ui.NavigationUI;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import java.util.List;
 
 import creator.android.clipboard.databinding.InformationActivityBinding;
 import creator.android.clipboard.placeholder.Information;
 
 public class InformationActivity extends AppCompatActivity {
     private InformationActivityBinding binding;
-
     private RecyclerView accountsRecyclerView;
-    private InformationAdapter myAdapter;  // Assuming MyAdapter is already defined for the RecyclerView
-    private InformationDataSource informationDataSource; // Your SQLiteOpenHelper
+    private InformationAdapter myAdapter;
+    private InformationDataSource informationDataSource;
 
     private int accountId;
     @Override
@@ -51,7 +44,6 @@ public class InformationActivity extends AppCompatActivity {
         setContentView(binding.getRoot());
 
         MaterialToolbar toolbar = findViewById(R.id.information_toolbar);
-
         setSupportActionBar(toolbar);
 
         binding.fab.setOnClickListener(view -> Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
@@ -82,6 +74,39 @@ public class InformationActivity extends AppCompatActivity {
         binding.fab.setOnClickListener(v -> {
             openAddInformationDialog();
         });
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.information_menu, menu);
+
+        // create search view
+        MenuItem searchItem = menu.findItem(R.id.action_search_information);
+        SearchView searchView = (SearchView) searchItem.getActionView();
+        searchView.setQueryHint("Search infromation");
+
+
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                searchInformationByName(query);
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                searchInformationByName(newText);
+                return false;
+            }
+        });
+
+        return true;
+    }
+
+    private void searchInformationByName(String text) {
+        List<Information> informationList = informationDataSource.findByName(text, accountId);
+        myAdapter.updateData(informationList);
+        myAdapter.notifyDataSetChanged();
     }
 
     public void deleteInformation(int id) {
