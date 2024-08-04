@@ -1,15 +1,12 @@
 package creator.android.clipboard;
 
-import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
-import android.widget.SearchView;
+import androidx.appcompat.widget.SearchView;
 import android.widget.Toast;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
@@ -56,41 +53,42 @@ public class MainActivity extends AppCompatActivity {
         // create search view
         MenuItem searchItem = menu.findItem(R.id.action_search_account);
         SearchView searchView = (SearchView) searchItem.getActionView();
+        searchView.setQueryHint("Search account");
 
 
-        /*searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
-                // Perform the final search
-                Toast.makeText(MainActivity.this, "Search account submit", Toast.LENGTH_SHORT).show();
+                searchAccountByName(query);
                 return false;
             }
 
             @Override
             public boolean onQueryTextChange(String newText) {
-                Toast.makeText(MainActivity.this, "Search text change", Toast.LENGTH_SHORT).show();
+                searchAccountByName(newText);
                 return false;
             }
-        });*/
+        });
 
         return true;
+    }
+
+    private void searchAccountByName(String text) {
+        List<ListItem> filterItems = accountDataSource.findByName(text);
+        adapter.updateData(filterItems);
+        adapter.notifyDataSetChanged();
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
 
-        if (id == R.id.action_settings) {
+        /*if (id == R.id.action_settings) {
             return true;
-        }
+        }*/
 
         if (id == R.id.action_add_account) {
             openAddAccount();
-        }
-
-        if (id == R.id.action_search_account) {
-            // Handle the "Search" button click here
-            return true;
         }
 
         return super.onOptionsItemSelected(item);

@@ -54,6 +54,27 @@ public class AccountDataSource {
         accountRepository.updateAccount(id, "", 0);
     }
 
+    public List<ListItem> findByName(String text) {
+        Cursor cursor = accountRepository.getAccountByNameContains(text);
+        List<ListItem> items = new ArrayList<>();
+        while (cursor.moveToNext()) {
+            String id = cursor.getString(cursor.getColumnIndex("id"));
+            String name = cursor.getString(cursor.getColumnIndex("name"));
+            int count = cursor.getInt(cursor.getColumnIndex("count"));
+            String createdAt = cursor.getString(cursor.getColumnIndex("createdAt"));
+            String updatedAt = cursor.getString(cursor.getColumnIndex("updatedAt"));
+
+            ListItem item = new ListItem(id, name);
+            item.setCount(count)
+                    .setUpdatedAt(updatedAt)
+                    .setCreatedAt(createdAt);
+
+            items.add(item);
+        }
+        cursor.close();
+        return items;
+    }
+
 
     public static class Account {
 

@@ -210,4 +210,16 @@ public class AccountRepository {
                 new String[]{String.valueOf(accountId)}
         );
     }
+
+    public Cursor getAccountByNameContains(String text) {
+        return database.query(
+                MyDatabaseHelper.TABLE_ACCOUNT,
+                MyDatabaseHelper.TABLE_ACCOUNT_COLUMNS,
+                "name LIKE ?",                                 // The WHERE clause (selection)
+                new String[]{"%" + text + "%"},
+                null,
+                null,
+                null
+        );
+    }
 }
