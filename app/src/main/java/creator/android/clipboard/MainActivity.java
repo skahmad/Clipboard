@@ -1,11 +1,13 @@
 package creator.android.clipboard;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.EditText;
+import android.widget.SearchView;
 import android.widget.Toast;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
@@ -39,6 +41,52 @@ public class MainActivity extends AppCompatActivity {
         recyclerView.setAdapter(adapter);
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_main, menu);
+
+        // create search view
+        MenuItem searchItem = menu.findItem(R.id.action_search_account);
+        SearchView searchView = (SearchView) searchItem.getActionView();
+
+
+        /*searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                // Perform the final search
+                Toast.makeText(MainActivity.this, "Search account submit", Toast.LENGTH_SHORT).show();
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                Toast.makeText(MainActivity.this, "Search text change", Toast.LENGTH_SHORT).show();
+                return false;
+            }
+        });*/
+
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+
+        if (id == R.id.action_settings) {
+            return true;
+        }
+
+        if (id == R.id.action_add_account) {
+            openAddAccount();
+        }
+
+        if (id == R.id.action_search_account) {
+            // Handle the "Search" button click here
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
 
     public void openAddAccount() {
         LayoutInflater layoutInflater = LayoutInflater.from(this);
@@ -70,34 +118,5 @@ public class MainActivity extends AppCompatActivity {
         // Show the dialog
         AlertDialog dialog = dialogBuilder.create();
         dialog.show();
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_main, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        int id = item.getItemId();
-
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        if (id == R.id.action_add_account) {
-            openAddAccount();
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
-
-    @Override
-    public boolean onSupportNavigateUp() {
-        //NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_main);
-//        return NavigationUI.navigateUp(navController, appBarConfiguration)
-//                || super.onSupportNavigateUp();
-        return false;
     }
 }

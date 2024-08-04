@@ -7,9 +7,9 @@
 
     <fragment
         android:id="@+id/FirstFragment"
-        android:name="creator.android.clipboard.AccountList"
+        android:name="creator.android.clipboard.FirstFragment"
         android:label="@string/first_fragment_label"
-        tools:layout="@layout/account_list">
+        tools:layout="@layout/fragment_first">
 
         <action
             android:id="@+id/action_FirstFragment_to_SecondFragment"
@@ -17,9 +17,9 @@
     </fragment>
     <fragment
         android:id="@+id/SecondFragment"
-        android:name="creator.android.clipboard.AccountDetails"
+        android:name="creator.android.clipboard.SecondFragment"
         android:label="@string/second_fragment_label"
-        tools:layout="@layout/account_details">
+        tools:layout="@layout/fragment_second">
 
         <action
             android:id="@+id/action_SecondFragment_to_FirstFragment"

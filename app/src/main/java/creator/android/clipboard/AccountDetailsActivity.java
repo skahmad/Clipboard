@@ -16,6 +16,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import creator.android.clipboard.R;
+import creator.android.clipboard.databinding.ActivityAccountDetailsBinding;
+import creator.android.clipboard.databinding.ActivityMainBinding;
 import creator.android.clipboard.placeholder.Information;
 
 import android.widget.Toast;
@@ -30,6 +32,7 @@ public class AccountDetailsActivity extends AppCompatActivity {
     private RecyclerView accountsRecyclerView;
     private InformationAdapter myAdapter;  // Assuming MyAdapter is already defined for the RecyclerView
     private InformationDataSource informationDataSource; // Your SQLiteOpenHelper
+    private ActivityAccountDetailsBinding binding;
 
     private Integer accountId;
 
@@ -37,6 +40,12 @@ public class AccountDetailsActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_account_details);
+
+        binding = ActivityAccountDetailsBinding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
+
+        setSupportActionBar(binding.toolbar);
+
         informationDataSource = new InformationDataSource(this);
 
         TextView textViewName = findViewById(R.id.textViewName);
@@ -52,9 +61,11 @@ public class AccountDetailsActivity extends AppCompatActivity {
             // Set the contact details to the views
             textViewName.setText(name);
             textViewDescription.setText(count);
+
+            binding.toolbar.setTitle(name);
         }
 
-        Button addButton = findViewById(R.id.addButton);
+        //Button addButton = findViewById(R.id.addButton);
         accountsRecyclerView = findViewById(R.id.accountsRecyclerView);
 
         // register for context menu
@@ -66,7 +77,7 @@ public class AccountDetailsActivity extends AppCompatActivity {
         accountsRecyclerView.setAdapter(myAdapter);
 
         // Handle Add Button Click
-        addButton.setOnClickListener(v -> {
+        binding.fab.setOnClickListener(v -> {
             openAddInformationDialog();
         });
     }

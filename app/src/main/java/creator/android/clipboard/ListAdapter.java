@@ -53,7 +53,8 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> {
             @Override
             public void onClick(View v) {
                 // Create an intent to start the ContactDetailsActivity
-                Intent intent = new Intent(context, AccountDetailsActivity.class);
+                Intent intent = new Intent(context, InformationActivity.class);
+                //Intent intent = new Intent(context, AccountDetailsActivity.class);
                 intent.putExtra("name", item.getName());
                 intent.putExtra("count", item.getCount());
                 intent.putExtra("accountId", item.getId());
