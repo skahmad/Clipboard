@@ -25,17 +25,13 @@ import creator.android.clipboard.placeholder.Information;
 public class InformationAdapter extends RecyclerView.Adapter<InformationAdapter.ViewHolder> {
     private List<Information> items;
     private Context context;
-    AccountDetailsActivity accountDetailsActivity;
+    InformationActivity informationActivity;
+    private InformationDataSource informationDataSource;
 
-    public InformationAdapter(Context context, List<Information> items, AccountDetailsActivity activity) {
+    public InformationAdapter(Context context, List<Information> items, InformationActivity activity) {
         this.context = context;
         this.items = items;
-        accountDetailsActivity = activity;
-    }
-
-
-    public void updateData(List<Information> newItemList) {
-        this.items = newItemList;
+        informationActivity = activity;
     }
 
     @NonNull
@@ -53,7 +49,6 @@ public class InformationAdapter extends RecyclerView.Adapter<InformationAdapter.
 
         holder.itemView.setTag(position);
 
-        // Set a click listener on the entire item view
         holder.itemView.setOnClickListener(v -> {
             ClipboardManager clipboard = (ClipboardManager) context.getSystemService(Context.CLIPBOARD_SERVICE);
             ClipData clip = ClipData.newPlainText("Account Details", item.getDetails());
@@ -61,12 +56,11 @@ public class InformationAdapter extends RecyclerView.Adapter<InformationAdapter.
             Toast.makeText(context, "Copied to clipboard", Toast.LENGTH_SHORT).show();
         });
 
-        // Set long click listener to show context menu
         holder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
                 v.setTag(item);
-                v.showContextMenu();  // Show the context menu on long press
+                v.showContextMenu();
                 return true;
             }
         });
@@ -75,6 +69,10 @@ public class InformationAdapter extends RecyclerView.Adapter<InformationAdapter.
     @Override
     public int getItemCount() {
         return items.size();
+    }
+
+    public void updateData(List<Information> newItemList) {
+        this.items = newItemList;
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnCreateContextMenuListener{
@@ -97,21 +95,21 @@ public class InformationAdapter extends RecyclerView.Adapter<InformationAdapter.
             menu
                     .findItem(R.id.information_view_option)
                     .setOnMenuItemClickListener(item -> {
-                        accountDetailsActivity.openViewDialog(information.getId());
+                        informationActivity.openViewDialog(information.getId());
                         return true;
                     });
 
             menu
                     .findItem(R.id.information_edit_option)
                     .setOnMenuItemClickListener(item -> {
-                        accountDetailsActivity.openEditDialog(information.getId());
+                        informationActivity.openEditDialog(information.getId());
                         return true;
                     });
 
             menu
                     .findItem(R.id.information_delete_option)
                     .setOnMenuItemClickListener(item->{
-                        accountDetailsActivity.deleteInformation(information.getId());
+                        informationActivity.deleteInformation(information.getId());
                        return true;
                     });
         }
