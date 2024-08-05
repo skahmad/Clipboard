@@ -18,9 +18,9 @@ import java.util.List;
 
 import creator.android.clipboard.R;
 import creator.android.clipboard.adapters.AccountAdapter;
-import creator.android.clipboard.data.AccountDataSource;
+import creator.android.clipboard.repositories.AccountDataSource;
 import creator.android.clipboard.databinding.ActivityMainBinding;
-import creator.android.clipboard.placeholder.ListItem;
+import creator.android.clipboard.models.ListItem;
 
 public class MainActivity extends AppCompatActivity {
     private ActivityMainBinding binding;

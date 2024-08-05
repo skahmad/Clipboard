@@ -14,7 +14,7 @@ import java.util.List;
 
 import creator.android.clipboard.activities.InformationActivity;
 import creator.android.clipboard.R;
-import creator.android.clipboard.placeholder.ListItem;
+import creator.android.clipboard.models.ListItem;
 
 public class AccountAdapter extends RecyclerView.Adapter<AccountAdapter.ViewHolder> {
     private List<ListItem> items;

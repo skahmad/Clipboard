@@ -24,16 +24,6 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
             "createdAt", "updatedAt"
     };
 
-    // Table columns
-    @Deprecated
-    public static final String COLUMN_ID = "id";
-    @Deprecated
-    public static final String COLUMN_NAME = "name";
-    @Deprecated
-    public static final String COLUMN_PHONE = "phone";
-    @Deprecated
-    public static final String COLUMN_EMAIL = "email";
-
     public MyDatabaseHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }

@@ -24,11 +24,11 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
 
-import creator.android.clipboard.data.InformationDataSource;
+import creator.android.clipboard.repositories.InformationDataSource;
 import creator.android.clipboard.R;
 import creator.android.clipboard.adapters.InformationAdapter;
 import creator.android.clipboard.databinding.InformationActivityBinding;
-import creator.android.clipboard.placeholder.Information;
+import creator.android.clipboard.models.Information;
 
 public class InformationActivity extends AppCompatActivity {
     private InformationActivityBinding binding;

@@ -1,4 +1,4 @@
-package creator.android.clipboard.placeholder;
+package creator.android.clipboard.models;
 
 public class ListItem {
     private String id = "";

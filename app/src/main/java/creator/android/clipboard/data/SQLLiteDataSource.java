@@ -7,8 +7,8 @@ import android.database.sqlite.SQLiteDatabase;
 
 import java.util.Date;
 
-import creator.android.clipboard.placeholder.Information;
-import creator.android.clipboard.placeholder.ListItem;
+import creator.android.clipboard.models.Information;
+import creator.android.clipboard.models.ListItem;
 
 public class SQLLiteDataSource {
 

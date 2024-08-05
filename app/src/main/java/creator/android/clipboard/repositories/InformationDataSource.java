@@ -1,4 +1,4 @@
-package creator.android.clipboard.data;
+package creator.android.clipboard.repositories;
 
 import android.content.Context;
 import android.database.Cursor;
@@ -7,11 +7,12 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import creator.android.clipboard.placeholder.Information;
-import creator.android.clipboard.placeholder.ListItem;
+import creator.android.clipboard.data.SQLLiteDataSource;
+import creator.android.clipboard.models.Information;
+import creator.android.clipboard.models.ListItem;
 
 public class InformationDataSource {
-    private SQLLiteDataSource SQLLiteDataSource;
+    private creator.android.clipboard.data.SQLLiteDataSource SQLLiteDataSource;
 
     public InformationDataSource(Context context) {
         SQLLiteDataSource = new SQLLiteDataSource(context);

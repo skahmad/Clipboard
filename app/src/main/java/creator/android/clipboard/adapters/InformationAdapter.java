@@ -17,9 +17,9 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.List;
 
 import creator.android.clipboard.activities.InformationActivity;
-import creator.android.clipboard.data.InformationDataSource;
+import creator.android.clipboard.repositories.InformationDataSource;
 import creator.android.clipboard.R;
-import creator.android.clipboard.placeholder.Information;
+import creator.android.clipboard.models.Information;
 
 public class InformationAdapter extends RecyclerView.Adapter<InformationAdapter.ViewHolder> {
     private List<Information> items;
