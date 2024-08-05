@@ -7,7 +7,6 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import creator.android.clipboard.repositories.SQLLiteDataSource;
 import creator.android.clipboard.placeholder.Information;
 import creator.android.clipboard.placeholder.ListItem;
 

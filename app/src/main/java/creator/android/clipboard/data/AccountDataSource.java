@@ -7,7 +7,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import creator.android.clipboard.placeholder.ListItem;
-import creator.android.clipboard.repositories.SQLLiteDataSource;
 
 public class AccountDataSource {
     SQLLiteDataSource SQLLiteDataSource;

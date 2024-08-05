@@ -1,4 +1,4 @@
-package creator.android.clipboard.repositories;
+package creator.android.clipboard.data;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -7,7 +7,6 @@ import android.database.sqlite.SQLiteDatabase;
 
 import java.util.Date;
 
-import creator.android.clipboard.data.MyDatabaseHelper;
 import creator.android.clipboard.placeholder.Information;
 import creator.android.clipboard.placeholder.ListItem;
 
