@@ -16,13 +16,13 @@ import creator.android.clipboard.activities.InformationActivity;
 import creator.android.clipboard.R;
 import creator.android.clipboard.placeholder.ListItem;
 
-public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> {
+public class AccountAdapter extends RecyclerView.Adapter<AccountAdapter.ViewHolder> {
     private List<ListItem> items;
     private Context context;
 
     // Constructor
     // Constructor
-    public ListAdapter(Context context, List<ListItem> items) {
+    public AccountAdapter(Context context, List<ListItem> items) {
         this.context = context;
         this.items = items;
     }

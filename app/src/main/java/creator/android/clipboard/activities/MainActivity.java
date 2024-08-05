@@ -17,7 +17,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.List;
 
 import creator.android.clipboard.R;
-import creator.android.clipboard.adapters.ListAdapter;
+import creator.android.clipboard.adapters.AccountAdapter;
 import creator.android.clipboard.data.AccountDataSource;
 import creator.android.clipboard.databinding.ActivityMainBinding;
 import creator.android.clipboard.placeholder.ListItem;
@@ -25,7 +25,7 @@ import creator.android.clipboard.placeholder.ListItem;
 public class MainActivity extends AppCompatActivity {
     private ActivityMainBinding binding;
     private AccountDataSource accountDataSource;
-    ListAdapter adapter;
+    AccountAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,7 +45,7 @@ public class MainActivity extends AppCompatActivity {
         recyclerView.addItemDecoration(dividerItemDecoration);
 
         List<ListItem> items = accountDataSource.getItems();
-        adapter = new ListAdapter(this, items);
+        adapter = new AccountAdapter(this, items);
         recyclerView.setAdapter(adapter);
     }
 
