@@ -1,6 +1,6 @@
 package creator.android.clipboard.models;
 
-public class ListItem {
+public class Account {
     private String id = "";
     private String name = "";
     private Integer count = 0;
@@ -8,7 +8,7 @@ public class ListItem {
     private String updatedAt = "";
 
 
-    public ListItem(String id, String name) {
+    public Account(String id, String name) {
         this.id = id;
         this.name = name;
     }
@@ -20,22 +20,22 @@ public class ListItem {
     public int getIntId() {
         return Integer.parseInt(id);
     }
-    public ListItem setCount(Integer count) {
+    public Account setCount(Integer count) {
         this.count = count;
         return this;
     }
 
-    public ListItem setCreatedAt(String createdAt) {
+    public Account setCreatedAt(String createdAt) {
         this.createdAt = createdAt;
         return this;
     }
 
-    public ListItem setName(String name) {
+    public Account setName(String name) {
         this.name = name;
         return this;
     }
 
-    public ListItem setUpdatedAt(String updatedAt) {
+    public Account setUpdatedAt(String updatedAt) {
         this.updatedAt = updatedAt;
         return this;
     }

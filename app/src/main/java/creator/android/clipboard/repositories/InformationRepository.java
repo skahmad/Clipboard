@@ -9,7 +9,7 @@ import java.util.List;
 
 import creator.android.clipboard.data.SQLLiteDataSource;
 import creator.android.clipboard.models.Information;
-import creator.android.clipboard.models.ListItem;
+import creator.android.clipboard.models.Account;
 
 public class InformationRepository {
     private creator.android.clipboard.data.SQLLiteDataSource SQLLiteDataSource;
@@ -44,7 +44,7 @@ public class InformationRepository {
     }
 
     public void addInformation(Integer accountId, String name, String details) {
-        ListItem item = SQLLiteDataSource.getAccount(accountId);
+        Account item = SQLLiteDataSource.getAccount(accountId);
         if(item != null ) {
             Information information = new Information(accountId);
             information.setName(name);
@@ -67,7 +67,7 @@ public class InformationRepository {
 
     public void delete(int id) {
         Information information = SQLLiteDataSource.getInformation(id);
-        ListItem account = SQLLiteDataSource.getAccount(information.getAccountId());
+        Account account = SQLLiteDataSource.getAccount(information.getAccountId());
         SQLLiteDataSource.deleteInformation(id);
         SQLLiteDataSource.decrementInformation(account.getIntId(), account.getCount());
     }

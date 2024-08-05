@@ -8,7 +8,7 @@ import android.database.sqlite.SQLiteDatabase;
 import java.util.Date;
 
 import creator.android.clipboard.models.Information;
-import creator.android.clipboard.models.ListItem;
+import creator.android.clipboard.models.Account;
 
 public class SQLLiteDataSource {
 
@@ -117,7 +117,7 @@ public class SQLLiteDataSource {
         );
     }
 
-    public ListItem getAccount(Integer id) {
+    public Account getAccount(Integer id) {
         Cursor cursor = database.query(
                 MyDatabaseHelper.TABLE_ACCOUNT,
                 new String[]{"id", "name", "count", "createdAt", "updatedAt"},
@@ -136,7 +136,7 @@ public class SQLLiteDataSource {
             String createdAt = cursor.getString(cursor.getColumnIndex("createdAt"));
             String updatedAt = cursor.getString(cursor.getColumnIndex("updatedAt"));
 
-            ListItem item = new ListItem(iid, name);
+            Account item = new Account(iid, name);
             item.setCount(count)
                     .setUpdatedAt(updatedAt)
                     .setCreatedAt(createdAt);

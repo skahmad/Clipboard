@@ -7,7 +7,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import creator.android.clipboard.data.SQLLiteDataSource;
-import creator.android.clipboard.models.ListItem;
 
 public class AccountRepository {
     creator.android.clipboard.data.SQLLiteDataSource SQLLiteDataSource;
@@ -26,8 +25,8 @@ public class AccountRepository {
     }
 
 
-    public List<ListItem> getItems() {
-        List<ListItem> items = new ArrayList<>();
+    public List<creator.android.clipboard.models.Account> getItems() {
+        List<creator.android.clipboard.models.Account> items = new ArrayList<>();
         Cursor cursor = SQLLiteDataSource.getAllAccount();
         while (cursor.moveToNext()) {
             String id = cursor.getString(cursor.getColumnIndex("id"));
@@ -36,7 +35,7 @@ public class AccountRepository {
             String createdAt = cursor.getString(cursor.getColumnIndex("createdAt"));
             String updatedAt = cursor.getString(cursor.getColumnIndex("updatedAt"));
 
-            ListItem item = new ListItem(id, name);
+            creator.android.clipboard.models.Account item = new creator.android.clipboard.models.Account(id, name);
             item.setCount(count)
                 .setUpdatedAt(updatedAt)
                 .setCreatedAt(createdAt);
@@ -55,9 +54,9 @@ public class AccountRepository {
         SQLLiteDataSource.updateAccount(id, "", 0);
     }
 
-    public List<ListItem> findByName(String text) {
+    public List<creator.android.clipboard.models.Account> findByName(String text) {
         Cursor cursor = SQLLiteDataSource.getAccountByNameContains(text);
-        List<ListItem> items = new ArrayList<>();
+        List<creator.android.clipboard.models.Account> items = new ArrayList<>();
         while (cursor.moveToNext()) {
             String id = cursor.getString(cursor.getColumnIndex("id"));
             String name = cursor.getString(cursor.getColumnIndex("name"));
@@ -65,7 +64,7 @@ public class AccountRepository {
             String createdAt = cursor.getString(cursor.getColumnIndex("createdAt"));
             String updatedAt = cursor.getString(cursor.getColumnIndex("updatedAt"));
 
-            ListItem item = new ListItem(id, name);
+            creator.android.clipboard.models.Account item = new creator.android.clipboard.models.Account(id, name);
             item.setCount(count)
                     .setUpdatedAt(updatedAt)
                     .setCreatedAt(createdAt);

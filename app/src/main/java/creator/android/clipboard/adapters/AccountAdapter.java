@@ -14,21 +14,21 @@ import java.util.List;
 
 import creator.android.clipboard.activities.InformationActivity;
 import creator.android.clipboard.R;
-import creator.android.clipboard.models.ListItem;
+import creator.android.clipboard.models.Account;
 
 public class AccountAdapter extends RecyclerView.Adapter<AccountAdapter.ViewHolder> {
-    private List<ListItem> items;
+    private List<Account> items;
     private Context context;
 
     // Constructor
     // Constructor
-    public AccountAdapter(Context context, List<ListItem> items) {
+    public AccountAdapter(Context context, List<Account> items) {
         this.context = context;
         this.items = items;
     }
 
 
-    public void updateData(List<ListItem> newItemList) {
+    public void updateData(List<Account> newItemList) {
         this.items = newItemList;
     }
 
@@ -42,7 +42,7 @@ public class AccountAdapter extends RecyclerView.Adapter<AccountAdapter.ViewHold
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        ListItem item = items.get(position);
+        Account item = items.get(position);
         holder.text1.setText(item.getName());
         holder.text2.setText(item.getCount()==0? "No information found": item.getCount() + " information's");
 

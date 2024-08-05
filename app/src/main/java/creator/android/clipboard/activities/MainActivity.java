@@ -20,7 +20,7 @@ import creator.android.clipboard.R;
 import creator.android.clipboard.adapters.AccountAdapter;
 import creator.android.clipboard.repositories.AccountRepository;
 import creator.android.clipboard.databinding.ActivityMainBinding;
-import creator.android.clipboard.models.ListItem;
+import creator.android.clipboard.models.Account;
 
 public class MainActivity extends AppCompatActivity {
     private ActivityMainBinding binding;
@@ -44,7 +44,7 @@ public class MainActivity extends AppCompatActivity {
         dividerItemDecoration.setDrawable(ContextCompat.getDrawable(this, R.drawable.divider));
         recyclerView.addItemDecoration(dividerItemDecoration);
 
-        List<ListItem> items = accountRepository.getItems();
+        List<Account> items = accountRepository.getItems();
         adapter = new AccountAdapter(this, items);
         recyclerView.setAdapter(adapter);
     }
@@ -77,7 +77,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void searchAccountByName(String text) {
-        List<ListItem> filterItems = accountRepository.findByName(text);
+        List<Account> filterItems = accountRepository.findByName(text);
         adapter.updateData(filterItems);
         adapter.notifyDataSetChanged();
     }
