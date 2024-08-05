@@ -11,12 +11,12 @@ import creator.android.clipboard.data.MyDatabaseHelper;
 import creator.android.clipboard.placeholder.Information;
 import creator.android.clipboard.placeholder.ListItem;
 
-public class AccountRepository {
+public class SQLLiteDataSource {
 
     private SQLiteDatabase database;
     private MyDatabaseHelper dbHelper;
 
-    public AccountRepository(Context context) {
+    public SQLLiteDataSource(Context context) {
         dbHelper = new MyDatabaseHelper(context);
     }
 

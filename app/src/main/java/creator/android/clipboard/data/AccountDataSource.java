@@ -7,18 +7,18 @@ import java.util.ArrayList;
 import java.util.List;
 
 import creator.android.clipboard.placeholder.ListItem;
-import creator.android.clipboard.repositories.AccountRepository;
+import creator.android.clipboard.repositories.SQLLiteDataSource;
 
 public class AccountDataSource {
-    AccountRepository accountRepository;
+    SQLLiteDataSource SQLLiteDataSource;
 
     public AccountDataSource(Context context) {
-        accountRepository = new AccountRepository(context);
-        accountRepository.open();
+        SQLLiteDataSource = new SQLLiteDataSource(context);
+        SQLLiteDataSource.open();
     }
 
     public void addAccount(String name) {
-        accountRepository.addAccount(name);
+        SQLLiteDataSource.addAccount(name);
     }
 
     public void addAccount(Account account) {
@@ -28,7 +28,7 @@ public class AccountDataSource {
 
     public List<ListItem> getItems() {
         List<ListItem> items = new ArrayList<>();
-        Cursor cursor = accountRepository.getAllAccount();
+        Cursor cursor = SQLLiteDataSource.getAllAccount();
         while (cursor.moveToNext()) {
             String id = cursor.getString(cursor.getColumnIndex("id"));
             String name = cursor.getString(cursor.getColumnIndex("name"));
@@ -48,15 +48,15 @@ public class AccountDataSource {
     }
 
     public void deleteAccount(long id) {
-        accountRepository.deleteAccount(id);
+        SQLLiteDataSource.deleteAccount(id);
     }
 
     public void updateAccount(long id, Account account) {
-        accountRepository.updateAccount(id, "", 0);
+        SQLLiteDataSource.updateAccount(id, "", 0);
     }
 
     public List<ListItem> findByName(String text) {
-        Cursor cursor = accountRepository.getAccountByNameContains(text);
+        Cursor cursor = SQLLiteDataSource.getAccountByNameContains(text);
         List<ListItem> items = new ArrayList<>();
         while (cursor.moveToNext()) {
             String id = cursor.getString(cursor.getColumnIndex("id"));
@@ -82,6 +82,6 @@ public class AccountDataSource {
     }
 
     public void close() {
-        accountRepository.close();
+        SQLLiteDataSource.close();
     }
 }

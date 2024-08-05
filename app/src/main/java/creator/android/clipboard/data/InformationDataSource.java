@@ -7,21 +7,21 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import creator.android.clipboard.repositories.AccountRepository;
+import creator.android.clipboard.repositories.SQLLiteDataSource;
 import creator.android.clipboard.placeholder.Information;
 import creator.android.clipboard.placeholder.ListItem;
 
 public class InformationDataSource {
-    private AccountRepository accountRepository;
+    private SQLLiteDataSource SQLLiteDataSource;
 
     public InformationDataSource(Context context) {
-        accountRepository = new AccountRepository(context);
-        accountRepository.open();
+        SQLLiteDataSource = new SQLLiteDataSource(context);
+        SQLLiteDataSource.open();
     }
 
     public List<Information> getInformations(Integer accountId) {
         List<Information> informationList = new ArrayList<>();
-        Cursor cursor = accountRepository.getAllInformations(accountId);
+        Cursor cursor = SQLLiteDataSource.getAllInformations(accountId);
         while (cursor.moveToNext()) {
             Integer id = cursor.getInt(cursor.getColumnIndex("id"));
             Integer accId = cursor.getInt(cursor.getColumnIndex("account_id"));
@@ -44,7 +44,7 @@ public class InformationDataSource {
     }
 
     public void addInformation(Integer accountId, String name, String details) {
-        ListItem item = accountRepository.getAccount(accountId);
+        ListItem item = SQLLiteDataSource.getAccount(accountId);
         if(item != null ) {
             Information information = new Information(accountId);
             information.setName(name);
@@ -52,28 +52,28 @@ public class InformationDataSource {
             information.setCreatedAt(new Date().toString());
             information.setUpdatedAt(new Date().toString());
 
-            accountRepository.addInformation(accountId, information);
-            accountRepository.incrementInformation(accountId, item.getCount());
+            SQLLiteDataSource.addInformation(accountId, information);
+            SQLLiteDataSource.incrementInformation(accountId, item.getCount());
         }
     }
 
     public void update(int id, String key, String value) {
-        accountRepository.updateInformation(id, key, value);
+        SQLLiteDataSource.updateInformation(id, key, value);
     }
 
     public Information getInformation(int id) {
-        return accountRepository.getInformation(id);
+        return SQLLiteDataSource.getInformation(id);
     }
 
     public void delete(int id) {
-        Information information = accountRepository.getInformation(id);
-        ListItem account = accountRepository.getAccount(information.getAccountId());
-        accountRepository.deleteInformation(id);
-        accountRepository.decrementInformation(account.getIntId(), account.getCount());
+        Information information = SQLLiteDataSource.getInformation(id);
+        ListItem account = SQLLiteDataSource.getAccount(information.getAccountId());
+        SQLLiteDataSource.deleteInformation(id);
+        SQLLiteDataSource.decrementInformation(account.getIntId(), account.getCount());
     }
 
     public List<Information> findByName(String text, int accountId) {
-        Cursor cursor = accountRepository.getInformationByNameContains(accountId, text);
+        Cursor cursor = SQLLiteDataSource.getInformationByNameContains(accountId, text);
         List<Information> items = new ArrayList<>();
 
         while (cursor.moveToNext()) {
