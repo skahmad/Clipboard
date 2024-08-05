@@ -1,6 +1,5 @@
-package creator.android.clipboard;
+package creator.android.clipboard.data;
 
-import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 
@@ -8,9 +7,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import creator.android.clipboard.data.AccountDataSource;
-import creator.android.clipboard.data.AccountRepository;
-import creator.android.clipboard.data.MyDatabaseHelper;
+import creator.android.clipboard.repositories.AccountRepository;
 import creator.android.clipboard.placeholder.Information;
 import creator.android.clipboard.placeholder.ListItem;
 

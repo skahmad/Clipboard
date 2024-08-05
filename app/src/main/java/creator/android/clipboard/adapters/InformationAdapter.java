@@ -1,25 +1,24 @@
-package creator.android.clipboard;
+package creator.android.clipboard.adapters;
 
 import android.app.Activity;
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
-import android.content.DialogInterface;
-import android.content.Intent;
 import android.view.ContextMenu;
 import android.view.LayoutInflater;
 import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AlertDialog;
 import androidx.recyclerview.widget.RecyclerView;
 import java.util.List;
+
+import creator.android.clipboard.activities.InformationActivity;
+import creator.android.clipboard.data.InformationDataSource;
+import creator.android.clipboard.R;
 import creator.android.clipboard.placeholder.Information;
 
 public class InformationAdapter extends RecyclerView.Adapter<InformationAdapter.ViewHolder> {

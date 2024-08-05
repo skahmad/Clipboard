@@ -1,4 +1,4 @@
-package creator.android.clipboard;
+package creator.android.clipboard.adapters;
 
 import android.content.Context;
 import android.content.Intent;
@@ -6,14 +6,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.widget.TintTypedArray;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
 
+import creator.android.clipboard.activities.InformationActivity;
+import creator.android.clipboard.R;
 import creator.android.clipboard.placeholder.ListItem;
 
 public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> {

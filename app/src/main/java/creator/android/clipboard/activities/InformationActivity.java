@@ -1,4 +1,4 @@
-package creator.android.clipboard;
+package creator.android.clipboard.activities;
 
 import android.content.ClipData;
 import android.content.ClipboardManager;
@@ -24,6 +24,9 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
 
+import creator.android.clipboard.data.InformationDataSource;
+import creator.android.clipboard.R;
+import creator.android.clipboard.adapters.InformationAdapter;
 import creator.android.clipboard.databinding.InformationActivityBinding;
 import creator.android.clipboard.placeholder.Information;
 

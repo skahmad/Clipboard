@@ -1,4 +1,4 @@
-package creator.android.clipboard;
+package creator.android.clipboard.activities;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -15,6 +15,9 @@ import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import java.util.List;
+
+import creator.android.clipboard.R;
+import creator.android.clipboard.adapters.ListAdapter;
 import creator.android.clipboard.data.AccountDataSource;
 import creator.android.clipboard.databinding.ActivityMainBinding;
 import creator.android.clipboard.placeholder.ListItem;
