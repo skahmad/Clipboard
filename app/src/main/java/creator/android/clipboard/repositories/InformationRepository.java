@@ -11,10 +11,10 @@ import creator.android.clipboard.data.SQLLiteDataSource;
 import creator.android.clipboard.models.Information;
 import creator.android.clipboard.models.ListItem;
 
-public class InformationDataSource {
+public class InformationRepository {
     private creator.android.clipboard.data.SQLLiteDataSource SQLLiteDataSource;
 
-    public InformationDataSource(Context context) {
+    public InformationRepository(Context context) {
         SQLLiteDataSource = new SQLLiteDataSource(context);
         SQLLiteDataSource.open();
     }

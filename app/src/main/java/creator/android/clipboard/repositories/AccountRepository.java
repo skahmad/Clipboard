@@ -9,10 +9,10 @@ import java.util.List;
 import creator.android.clipboard.data.SQLLiteDataSource;
 import creator.android.clipboard.models.ListItem;
 
-public class AccountDataSource {
+public class AccountRepository {
     creator.android.clipboard.data.SQLLiteDataSource SQLLiteDataSource;
 
-    public AccountDataSource(Context context) {
+    public AccountRepository(Context context) {
         SQLLiteDataSource = new SQLLiteDataSource(context);
         SQLLiteDataSource.open();
     }

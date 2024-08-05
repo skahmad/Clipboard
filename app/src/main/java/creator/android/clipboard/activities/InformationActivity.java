@@ -24,7 +24,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
 
-import creator.android.clipboard.repositories.InformationDataSource;
+import creator.android.clipboard.repositories.InformationRepository;
 import creator.android.clipboard.R;
 import creator.android.clipboard.adapters.InformationAdapter;
 import creator.android.clipboard.databinding.InformationActivityBinding;
@@ -34,14 +34,14 @@ public class InformationActivity extends AppCompatActivity {
     private InformationActivityBinding binding;
     private RecyclerView accountsRecyclerView;
     private InformationAdapter myAdapter;
-    private InformationDataSource informationDataSource;
+    private InformationRepository informationRepository;
 
     private int accountId;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        informationDataSource = new InformationDataSource(this);
+        informationRepository = new InformationRepository(this);
 
         binding = InformationActivityBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
@@ -70,7 +70,7 @@ public class InformationActivity extends AppCompatActivity {
 
         // Initialize RecyclerView
         accountsRecyclerView.setLayoutManager(new LinearLayoutManager(this));
-        myAdapter = new InformationAdapter(this, informationDataSource.getInformations(accountId), this);
+        myAdapter = new InformationAdapter(this, informationRepository.getInformations(accountId), this);
         accountsRecyclerView.setAdapter(myAdapter);
 
         // Handle Add Button Click
@@ -107,23 +107,23 @@ public class InformationActivity extends AppCompatActivity {
     }
 
     private void searchInformationByName(String text) {
-        List<Information> informationList = informationDataSource.findByName(text, accountId);
+        List<Information> informationList = informationRepository.findByName(text, accountId);
         myAdapter.updateData(informationList);
         myAdapter.notifyDataSetChanged();
     }
 
     public void deleteInformation(int id) {
-        informationDataSource.delete(id);
+        informationRepository.delete(id);
     }
 
     private void saveEditedData(int id, String key, String value) {
-        informationDataSource.update(id, key, value);
+        informationRepository.update(id, key, value);
         Toast.makeText(this, "Information updated", Toast.LENGTH_SHORT).show();
     }
 
     public void openEditDialog(int position) {
         // Get the item data based on position
-        Information information = informationDataSource.getInformation(position);
+        Information information = informationRepository.getInformation(position);
 
         String title = information.getName();
         String key = information.getName();
@@ -163,7 +163,7 @@ public class InformationActivity extends AppCompatActivity {
     }
 
     public void openViewDialog(int position) {
-        Information information = informationDataSource.getInformation(position);
+        Information information = informationRepository.getInformation(position);
 
         // Get the item data based on position
         String title = information.getName();
@@ -213,8 +213,8 @@ public class InformationActivity extends AppCompatActivity {
                 Toast.makeText(InformationActivity.this, "account not found: " + name, Toast.LENGTH_SHORT).show();
 
             if (!name.isEmpty() && !details.isEmpty()) {
-                informationDataSource.addInformation(accountId, name, details);
-                myAdapter.updateData(informationDataSource.getInformations(accountId));
+                informationRepository.addInformation(accountId, name, details);
+                myAdapter.updateData(informationRepository.getInformations(accountId));
                 myAdapter.notifyDataSetChanged();
 
                 Toast.makeText(InformationActivity.this, "Contact added: " + name, Toast.LENGTH_SHORT).show();

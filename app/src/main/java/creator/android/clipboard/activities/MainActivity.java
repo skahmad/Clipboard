@@ -18,19 +18,19 @@ import java.util.List;
 
 import creator.android.clipboard.R;
 import creator.android.clipboard.adapters.AccountAdapter;
-import creator.android.clipboard.repositories.AccountDataSource;
+import creator.android.clipboard.repositories.AccountRepository;
 import creator.android.clipboard.databinding.ActivityMainBinding;
 import creator.android.clipboard.models.ListItem;
 
 public class MainActivity extends AppCompatActivity {
     private ActivityMainBinding binding;
-    private AccountDataSource accountDataSource;
+    private AccountRepository accountRepository;
     AccountAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        accountDataSource = new AccountDataSource(this);
+        accountRepository = new AccountRepository(this);
 
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
@@ -44,7 +44,7 @@ public class MainActivity extends AppCompatActivity {
         dividerItemDecoration.setDrawable(ContextCompat.getDrawable(this, R.drawable.divider));
         recyclerView.addItemDecoration(dividerItemDecoration);
 
-        List<ListItem> items = accountDataSource.getItems();
+        List<ListItem> items = accountRepository.getItems();
         adapter = new AccountAdapter(this, items);
         recyclerView.setAdapter(adapter);
     }
@@ -77,7 +77,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void searchAccountByName(String text) {
-        List<ListItem> filterItems = accountDataSource.findByName(text);
+        List<ListItem> filterItems = accountRepository.findByName(text);
         adapter.updateData(filterItems);
         adapter.notifyDataSetChanged();
     }
@@ -103,7 +103,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void refreshAccount() {
-        adapter.updateData(accountDataSource.getItems());
+        adapter.updateData(accountRepository.getItems());
         adapter.notifyDataSetChanged();
     }
 
@@ -121,8 +121,8 @@ public class MainActivity extends AppCompatActivity {
         dialogBuilder.setPositiveButton("Add", (dialog, which) -> {
             String name = editTextName.getText().toString().trim();
             if (!name.isEmpty()) {
-                accountDataSource.addAccount(name);
-                adapter.updateData(accountDataSource.getItems());
+                accountRepository.addAccount(name);
+                adapter.updateData(accountRepository.getItems());
                 adapter.notifyDataSetChanged();
 
                 Toast.makeText(MainActivity.this, "Contact added: " + name, Toast.LENGTH_SHORT).show();
