@@ -44,7 +44,7 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> {
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         ListItem item = items.get(position);
         holder.text1.setText(item.getName());
-        holder.text2.setText(item.getCount()==0? "No account added": item.getCount() + " accounts");
+        holder.text2.setText(item.getCount()==0? "No information found": item.getCount() + " information's");
 
         holder.itemView.setTag(position);
 

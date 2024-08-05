@@ -87,11 +87,21 @@ public class MainActivity extends AppCompatActivity {
             return true;
         }*/
 
+        if( id == R.id.action_information_refresh) {
+            refreshAccount();
+            return true;
+        }
+
         if (id == R.id.action_add_account) {
             openAddAccount();
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    private void refreshAccount() {
+        adapter.updateData(accountDataSource.getItems());
+        adapter.notifyDataSetChanged();
     }
 
     public void openAddAccount() {
