@@ -6,27 +6,40 @@ import android.database.Cursor;
 import java.util.ArrayList;
 import java.util.List;
 
+import creator.android.clipboard.models.Account;
 import creator.android.clipboard.data.SQLLiteDataSource;
 
 public class AccountRepository {
-    creator.android.clipboard.data.SQLLiteDataSource SQLLiteDataSource;
+    SQLLiteDataSource SQLLiteDataSource;
 
     public AccountRepository(Context context) {
         SQLLiteDataSource = new SQLLiteDataSource(context);
         SQLLiteDataSource.open();
     }
 
+    public Account findById(int id) {
+        throw new RuntimeException("not implemented");
+    }
+    public List<Account> findAllByName(String name) {
+        throw new RuntimeException("not implemented");
+    }
+    public void add(Account account) {
+        throw new RuntimeException("not implemented");
+    }
+    public void deleteById(int id) {
+        throw new RuntimeException("not implemented");
+    }
+    public void updateAccount(int id, Account account) {
+        throw new RuntimeException("not implemented");
+    }
+
     public void addAccount(String name) {
         SQLLiteDataSource.addAccount(name);
     }
 
-    public void addAccount(Account account) {
 
-    }
-
-
-    public List<creator.android.clipboard.models.Account> getItems() {
-        List<creator.android.clipboard.models.Account> items = new ArrayList<>();
+    public List<Account> getItems() {
+        List<Account> items = new ArrayList<>();
         Cursor cursor = SQLLiteDataSource.getAllAccount();
         while (cursor.moveToNext()) {
             String id = cursor.getString(cursor.getColumnIndex("id"));
@@ -35,7 +48,7 @@ public class AccountRepository {
             String createdAt = cursor.getString(cursor.getColumnIndex("createdAt"));
             String updatedAt = cursor.getString(cursor.getColumnIndex("updatedAt"));
 
-            creator.android.clipboard.models.Account item = new creator.android.clipboard.models.Account(id, name);
+            Account item = new Account(id, name);
             item.setCount(count)
                 .setUpdatedAt(updatedAt)
                 .setCreatedAt(createdAt);
@@ -54,9 +67,9 @@ public class AccountRepository {
         SQLLiteDataSource.updateAccount(id, "", 0);
     }
 
-    public List<creator.android.clipboard.models.Account> findByName(String text) {
+    public List<Account> findByName(String text) {
         Cursor cursor = SQLLiteDataSource.getAccountByNameContains(text);
-        List<creator.android.clipboard.models.Account> items = new ArrayList<>();
+        List<Account> items = new ArrayList<>();
         while (cursor.moveToNext()) {
             String id = cursor.getString(cursor.getColumnIndex("id"));
             String name = cursor.getString(cursor.getColumnIndex("name"));
@@ -64,7 +77,7 @@ public class AccountRepository {
             String createdAt = cursor.getString(cursor.getColumnIndex("createdAt"));
             String updatedAt = cursor.getString(cursor.getColumnIndex("updatedAt"));
 
-            creator.android.clipboard.models.Account item = new creator.android.clipboard.models.Account(id, name);
+            Account item = new Account(id, name);
             item.setCount(count)
                     .setUpdatedAt(updatedAt)
                     .setCreatedAt(createdAt);
@@ -73,11 +86,6 @@ public class AccountRepository {
         }
         cursor.close();
         return items;
-    }
-
-
-    public static class Account {
-
     }
 
     public void close() {
