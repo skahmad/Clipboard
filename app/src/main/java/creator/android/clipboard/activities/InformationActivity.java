@@ -21,10 +21,7 @@ import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
 import java.util.List;
-
-import creator.android.clipboard.data.SQLLiteDataSource;
 import creator.android.clipboard.repositories.InformationRepository;
 import creator.android.clipboard.R;
 import creator.android.clipboard.adapters.InformationAdapter;
@@ -32,8 +29,6 @@ import creator.android.clipboard.databinding.InformationActivityBinding;
 import creator.android.clipboard.models.Information;
 
 public class InformationActivity extends AppCompatActivity {
-    private InformationActivityBinding binding;
-    private RecyclerView accountsRecyclerView;
     private InformationAdapter myAdapter;
     private InformationRepository informationRepository;
 
@@ -41,10 +36,9 @@ public class InformationActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        SQLLiteDataSource dataSource = SQLLiteDataSource.instance(this);
-        informationRepository = new InformationRepository(dataSource);
+        informationRepository = new InformationRepository(this);
 
-        binding = InformationActivityBinding.inflate(getLayoutInflater());
+        creator.android.clipboard.databinding.InformationActivityBinding binding = InformationActivityBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
         MaterialToolbar toolbar = findViewById(R.id.information_toolbar);
@@ -63,7 +57,7 @@ public class InformationActivity extends AppCompatActivity {
             toolbar.setTitle(name);
         }
 
-        accountsRecyclerView = findViewById(R.id.information_list_view);
+        RecyclerView accountsRecyclerView = findViewById(R.id.information_list_view);
 
         DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(accountsRecyclerView.getContext(), LinearLayoutManager.VERTICAL);
         dividerItemDecoration.setDrawable(ContextCompat.getDrawable(this, R.drawable.divider));

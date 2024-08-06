@@ -2,26 +2,29 @@ package creator.android.clipboard.repositories;
 
 import android.content.Context;
 import android.database.Cursor;
-
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-
-import creator.android.clipboard.data.SQLLiteDataSource;
+import creator.android.clipboard.data.AccountDataSource;
+import creator.android.clipboard.data.InformationDataSource;
 import creator.android.clipboard.models.Information;
 import creator.android.clipboard.models.Account;
 
 public class InformationRepository {
-    private creator.android.clipboard.data.SQLLiteDataSource SQLLiteDataSource;
+    private final InformationDataSource informationDataSource;
+    private final AccountDataSource accountDataSource;
 
-    public InformationRepository(SQLLiteDataSource dataSource) {
-        SQLLiteDataSource = dataSource; //new SQLLiteDataSource(context);
-        SQLLiteDataSource.open();
+
+    public InformationRepository(Context context) {
+        informationDataSource = new InformationDataSource(context);
+        accountDataSource = new AccountDataSource(context);
+        accountDataSource.open();
+        informationDataSource.open();
     }
 
     public List<Information> getInformations(Integer accountId) {
         List<Information> informationList = new ArrayList<>();
-        Cursor cursor = SQLLiteDataSource.getAllInformations(accountId);
+        Cursor cursor = informationDataSource.getAllInformations(accountId);
         while (cursor.moveToNext()) {
             Integer id = cursor.getInt(cursor.getColumnIndex("id"));
             Integer accId = cursor.getInt(cursor.getColumnIndex("account_id"));
@@ -44,36 +47,36 @@ public class InformationRepository {
     }
 
     public void addInformation(Integer accountId, String name, String details) {
-        Account item = SQLLiteDataSource.getAccount(accountId);
-        if(item != null ) {
+        Account account = accountDataSource.getAccount(accountId);
+        if(account != null ) {
             Information information = new Information(accountId);
             information.setName(name);
             information.setDetails(details);
             information.setCreatedAt(new Date().toString());
             information.setUpdatedAt(new Date().toString());
 
-            SQLLiteDataSource.addInformation(accountId, information);
-            SQLLiteDataSource.incrementInformation(accountId, item.getCount());
+            informationDataSource.addInformation(accountId, information);
+            informationDataSource.incrementInformation(accountId, account.getCount());
         }
     }
 
     public void update(int id, String key, String value) {
-        SQLLiteDataSource.updateInformation(id, key, value);
+        informationDataSource.updateInformation(id, key, value);
     }
 
     public Information getInformation(int id) {
-        return SQLLiteDataSource.getInformation(id);
+        return informationDataSource.getInformation(id);
     }
 
     public void delete(int id) {
-        Information information = SQLLiteDataSource.getInformation(id);
-        Account account = SQLLiteDataSource.getAccount(information.getAccountId());
-        SQLLiteDataSource.deleteInformation(id);
-        SQLLiteDataSource.decrementInformation(account.getIntId(), account.getCount());
+        Information information = informationDataSource.getInformation(id);
+        Account account = accountDataSource.getAccount(information.getAccountId());
+        informationDataSource.deleteInformation(id);
+        informationDataSource.decrementInformation(account.getIntId(), account.getCount());
     }
 
     public List<Information> findByName(String text, int accountId) {
-        Cursor cursor = SQLLiteDataSource.getInformationByNameContains(accountId, text);
+        Cursor cursor = informationDataSource.getInformationByNameContains(accountId, text);
         List<Information> items = new ArrayList<>();
 
         while (cursor.moveToNext()) {
