@@ -38,7 +38,7 @@ public class InformationActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         informationRepository = new InformationRepository(this);
 
-        creator.android.clipboard.databinding.InformationActivityBinding binding = InformationActivityBinding.inflate(getLayoutInflater());
+        InformationActivityBinding binding = InformationActivityBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
         MaterialToolbar toolbar = findViewById(R.id.information_toolbar);
