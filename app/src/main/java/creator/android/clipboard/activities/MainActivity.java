@@ -18,6 +18,7 @@ import java.util.List;
 
 import creator.android.clipboard.R;
 import creator.android.clipboard.adapters.AccountAdapter;
+import creator.android.clipboard.data.SQLLiteDataSource;
 import creator.android.clipboard.repositories.AccountRepository;
 import creator.android.clipboard.databinding.ActivityMainBinding;
 import creator.android.clipboard.models.Account;
@@ -30,7 +31,8 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        accountRepository = new AccountRepository(this);
+        SQLLiteDataSource dataSource = SQLLiteDataSource.instance(this);
+        accountRepository = new AccountRepository(dataSource);
 
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());

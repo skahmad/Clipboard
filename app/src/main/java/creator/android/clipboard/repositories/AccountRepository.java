@@ -12,8 +12,8 @@ import creator.android.clipboard.data.SQLLiteDataSource;
 public class AccountRepository {
     SQLLiteDataSource SQLLiteDataSource;
 
-    public AccountRepository(Context context) {
-        SQLLiteDataSource = new SQLLiteDataSource(context);
+    public AccountRepository(SQLLiteDataSource dataSource) {
+        SQLLiteDataSource = dataSource; //new SQLLiteDataSource(context);
         SQLLiteDataSource.open();
     }
 

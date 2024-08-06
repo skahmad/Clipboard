@@ -24,6 +24,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
 
+import creator.android.clipboard.data.SQLLiteDataSource;
 import creator.android.clipboard.repositories.InformationRepository;
 import creator.android.clipboard.R;
 import creator.android.clipboard.adapters.InformationAdapter;
@@ -40,8 +41,8 @@ public class InformationActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        informationRepository = new InformationRepository(this);
+        SQLLiteDataSource dataSource = SQLLiteDataSource.instance(this);
+        informationRepository = new InformationRepository(dataSource);
 
         binding = InformationActivityBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());

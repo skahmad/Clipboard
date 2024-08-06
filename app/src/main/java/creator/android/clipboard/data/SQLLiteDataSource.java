@@ -14,6 +14,7 @@ public class SQLLiteDataSource {
 
     private SQLiteDatabase database;
     private MyDatabaseHelper dbHelper;
+    private static SQLLiteDataSource dataSource;
 
     public SQLLiteDataSource(Context context) {
         dbHelper = new MyDatabaseHelper(context);
@@ -21,12 +22,19 @@ public class SQLLiteDataSource {
 
     public void open() {
         database = dbHelper.getWritableDatabase();
+        dataSource = this;
     }
 
     public void close() {
         dbHelper.close();
     }
 
+    public static SQLLiteDataSource instance(Context context) {
+        if(dataSource == null) {
+            dataSource = new SQLLiteDataSource(context);
+        }
+        return dataSource;
+    }
     public long addAccount(String name) {
         ContentValues values = new ContentValues();
         values.put("name", name);
