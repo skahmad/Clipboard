@@ -29,11 +29,15 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         accountRepository = new AccountRepository(this);
-
-        creator.android.clipboard.databinding.ActivityMainBinding binding = ActivityMainBinding.inflate(getLayoutInflater());
+        ActivityMainBinding binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
         setSupportActionBar(binding.toolbar);
+
+        binding.fab.setOnClickListener(view -> {
+            openAddAccount();
+        });
+
 
         RecyclerView recyclerView = findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -94,7 +98,8 @@ public class MainActivity extends AppCompatActivity {
         }
 
         if (id == R.id.action_add_account) {
-            openAddAccount();
+            //openAddAccount();
+            return true;
         }
 
         return super.onOptionsItemSelected(item);
