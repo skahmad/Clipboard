@@ -5,19 +5,26 @@
     android:orientation="vertical"
     android:padding="16dp">
 
-    <EditText
-        android:id="@+id/editTextName"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+    <com.google.android.material.textfield.TextInputLayout
         android:hint="Name"
-        android:focusable="true"
-        android:inputType="textPersonName" />
-
-    <EditText
-        android:id="@+id/editTextDetails"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Details"
-        android:inputType="textPersonName" />
+        android:layout_height="wrap_content" >
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/editTextName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"  />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:hint="Information"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/editTextDetails"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"  />
+    </com.google.android.material.textfield.TextInputLayout>
 
 </LinearLayout>

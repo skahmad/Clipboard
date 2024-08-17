@@ -1,19 +1,20 @@
 package creator.android.clipboard.activities;
 
+import android.content.DialogInterface;
 import android.os.Bundle;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.EditText;
 import androidx.appcompat.widget.SearchView;
 import android.widget.Toast;
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import com.google.android.material.appbar.MaterialToolbar;
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
+import com.google.android.material.textfield.TextInputEditText;
 import java.util.List;
 import creator.android.clipboard.R;
 import creator.android.clipboard.adapters.AccountAdapter;
@@ -32,12 +33,12 @@ public class MainActivity extends AppCompatActivity {
         ActivityMainBinding binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        setSupportActionBar(binding.toolbar);
+        MaterialToolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
 
         binding.fab.setOnClickListener(view -> {
             openAddAccount();
         });
-
 
         RecyclerView recyclerView = findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -111,34 +112,33 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void openAddAccount() {
-        LayoutInflater layoutInflater = LayoutInflater.from(this);
-        View dialogView = layoutInflater.inflate(R.layout.dialog_add_account, null);
+        View dialogView = getLayoutInflater().inflate(R.layout.dialog_add_account, null);
+        TextInputEditText editTextName = dialogView.findViewById(R.id.editTextName);
+        new MaterialAlertDialogBuilder(this)
+                .setTitle("Add account")
+                .setView(dialogView)
+                .setPositiveButton("Add", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        String name = editTextName.getText().toString();
+                        if (name != null && !name.isEmpty()) {
+                            accountRepository.addAccount(name);
+                            adapter.updateData(accountRepository.getItems());
+                            adapter.notifyDataSetChanged();
 
-        // Add Account Dialog
-        AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(this);
-        dialogBuilder.setView(dialogView);
+                            Toast.makeText(MainActivity.this, "Contact added: " + name, Toast.LENGTH_SHORT).show();
 
-        final EditText editTextName = dialogView.findViewById(R.id.editTextName);
-
-        dialogBuilder.setTitle("Add Account");
-        dialogBuilder.setPositiveButton("Add", (dialog, which) -> {
-            String name = editTextName.getText().toString().trim();
-            if (!name.isEmpty()) {
-                accountRepository.addAccount(name);
-                adapter.updateData(accountRepository.getItems());
-                adapter.notifyDataSetChanged();
-
-                Toast.makeText(MainActivity.this, "Contact added: " + name, Toast.LENGTH_SHORT).show();
-
-            } else {
-                Toast.makeText(MainActivity.this, "Please fill out all fields", Toast.LENGTH_SHORT).show();
-            }
-        });
-
-        dialogBuilder.setNegativeButton("Cancel", (dialog, which) -> dialog.dismiss());
-
-        // Show the dialog
-        AlertDialog dialog = dialogBuilder.create();
-        dialog.show();
+                        } else {
+                            Toast.makeText(MainActivity.this, "Please fill out all fields", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                })
+                .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                })
+                .show();
     }
 }

@@ -6,7 +6,10 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import com.google.android.material.appbar.MaterialToolbar;
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.snackbar.Snackbar;
+import com.google.android.material.textfield.TextInputEditText;
+
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import android.view.LayoutInflater;
@@ -189,9 +192,12 @@ public class InformationActivity extends AppCompatActivity {
     }
 
     private void openAddInformationDialog() {
-        LayoutInflater layoutInflater = LayoutInflater.from(this);
-        View dialogView = layoutInflater.inflate(R.layout.dialog_add_information, null);
+        //LayoutInflater layoutInflater = LayoutInflater.from(this);
+        View dialogView = getLayoutInflater().inflate(R.layout.dialog_add_information, null);
 
+        //View dialogView = layoutInflater.inflate(R.layout.dialog_add_information, null);
+
+        /**
         // Add Account Dialog
         AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(this);
         dialogBuilder.setView(dialogView);
@@ -225,5 +231,41 @@ public class InformationActivity extends AppCompatActivity {
         // Show the dialog
         AlertDialog dialog = dialogBuilder.create();
         dialog.show();
+        */
+
+        TextInputEditText editTextName = dialogView.findViewById(R.id.editTextName);
+        TextInputEditText editTextDetails = dialogView.findViewById(R.id.editTextDetails);
+        new MaterialAlertDialogBuilder(this)
+                .setTitle("Add account")
+                .setView(dialogView)
+                .setPositiveButton("Add", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        String name = editTextName.getText().toString().trim();
+                        String details = editTextDetails.getText().toString().trim();
+
+                        if(accountId == -1)
+                            Toast.makeText(InformationActivity.this, "account not found: " + name, Toast.LENGTH_SHORT).show();
+
+                        if (!name.isEmpty() && !details.isEmpty()) {
+                            informationRepository.addInformation(accountId, name, details);
+                            myAdapter.updateData(informationRepository.getInformations(accountId));
+                            myAdapter.notifyDataSetChanged();
+
+                            Toast.makeText(InformationActivity.this, "Contact added: " + name, Toast.LENGTH_SHORT).show();
+
+                        }
+                        else {
+                            Toast.makeText(InformationActivity.this, "Please fill out all fields", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                })
+                .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                })
+                .show();
     }
 }
