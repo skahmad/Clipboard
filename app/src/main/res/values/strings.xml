@@ -7,4 +7,5 @@
     <string name="add_account">Add Account</string>
     <string name="menu_delete">Delete</string>
     <string name="menu_edit">Edit</string>
+    <string name="authenticate">Authenticate</string>
 </resources>

@@ -1,19 +1,18 @@
 package creator.android.clipboard.activities;
 
-import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
-
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.widget.SearchView;
-
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.biometric.BiometricManager;
+import androidx.biometric.BiometricPrompt;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -22,9 +21,9 @@ import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.textfield.TextInputEditText;
 import java.util.List;
+import java.util.concurrent.Executor;
 import creator.android.clipboard.R;
 import creator.android.clipboard.adapters.AccountAdapter;
-import creator.android.clipboard.models.Information;
 import creator.android.clipboard.repositories.AccountRepository;
 import creator.android.clipboard.databinding.ActivityMainBinding;
 import creator.android.clipboard.models.Account;

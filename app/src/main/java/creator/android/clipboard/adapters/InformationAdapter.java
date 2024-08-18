@@ -54,7 +54,6 @@ public class InformationAdapter extends RecyclerView.Adapter<InformationAdapter.
             ClipboardManager clipboard = (ClipboardManager) context.getSystemService(Context.CLIPBOARD_SERVICE);
             ClipData clip = ClipData.newPlainText("Account Details", item.getDetails());
             clipboard.setPrimaryClip(clip);
-            Toast.makeText(context, "Copied to clipboard", Toast.LENGTH_SHORT).show();
         });
 
         holder.itemView.setOnLongClickListener(v -> {
