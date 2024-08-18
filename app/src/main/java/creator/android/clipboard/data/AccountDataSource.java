@@ -35,7 +35,8 @@ public class AccountDataSource extends SQLLiteDataSource {
         );
     }
 
-    public int updateAccount(long id, String name, int count) {
+    // todo remove count from parameter
+    public int updateAccount(int id, String name, int count) {
         ContentValues values = new ContentValues();
         values.put("name", name);
         values.put("count", count);

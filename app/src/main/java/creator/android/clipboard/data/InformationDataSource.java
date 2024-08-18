@@ -130,4 +130,12 @@ public class InformationDataSource extends SQLLiteDataSource {
                 null
         );
     }
+
+    public void deleteAllByAccount(long id) {
+        database.delete(
+                MyDatabaseHelper.TABLE_INFORMATION,
+                "account_id" + " = ?",
+                new String[]{String.valueOf(id)}
+        );
+    }
 }

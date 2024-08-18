@@ -99,4 +99,8 @@ public class InformationRepository {
         cursor.close();
         return items;
     }
+
+    public void deleteByAccountId(Integer id) {
+        informationDataSource.deleteAllByAccount(id);
+    }
 }

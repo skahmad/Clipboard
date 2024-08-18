@@ -2,10 +2,16 @@ package creator.android.clipboard.activities;
 
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.widget.SearchView;
+
+import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
@@ -18,18 +24,23 @@ import com.google.android.material.textfield.TextInputEditText;
 import java.util.List;
 import creator.android.clipboard.R;
 import creator.android.clipboard.adapters.AccountAdapter;
+import creator.android.clipboard.models.Information;
 import creator.android.clipboard.repositories.AccountRepository;
 import creator.android.clipboard.databinding.ActivityMainBinding;
 import creator.android.clipboard.models.Account;
+import creator.android.clipboard.repositories.InformationRepository;
 
 public class MainActivity extends AppCompatActivity {
     AccountRepository accountRepository;
+    InformationRepository informationRepository;
     AccountAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         accountRepository = new AccountRepository(this);
+        informationRepository = new InformationRepository(this);
+
         ActivityMainBinding binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
@@ -117,28 +128,59 @@ public class MainActivity extends AppCompatActivity {
         new MaterialAlertDialogBuilder(this)
                 .setTitle("Add account")
                 .setView(dialogView)
-                .setPositiveButton("Add", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        String name = editTextName.getText().toString();
-                        if (name != null && !name.isEmpty()) {
-                            accountRepository.addAccount(name);
-                            adapter.updateData(accountRepository.getItems());
-                            adapter.notifyDataSetChanged();
+                .setPositiveButton("Add", (dialog, which) -> {
+                    String name = editTextName.getText().toString();
+                    if (name != null && !name.isEmpty()) {
+                        accountRepository.addAccount(name);
+                        adapter.updateData(accountRepository.getItems());
+                        adapter.notifyDataSetChanged();
 
-                            Toast.makeText(MainActivity.this, "Contact added: " + name, Toast.LENGTH_SHORT).show();
+                        Toast.makeText(MainActivity.this, "Contact added: " + name, Toast.LENGTH_SHORT).show();
 
-                        } else {
-                            Toast.makeText(MainActivity.this, "Please fill out all fields", Toast.LENGTH_SHORT).show();
-                        }
+                    } else {
+                        Toast.makeText(MainActivity.this, "Please fill out all fields", Toast.LENGTH_SHORT).show();
                     }
                 })
-                .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        dialog.dismiss();
-                    }
-                })
+                .setNegativeButton("Cancel", (dialog, which) -> dialog.dismiss())
                 .show();
+    }
+
+    public void openEditDialog(int position) {
+        Account account = accountRepository.findById(position);
+
+        String name = account.getName();
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Edit " + account.getName());
+
+        View viewInflated = LayoutInflater.from(this).inflate(R.layout.dialog_edit_account, (ViewGroup) findViewById(android.R.id.content), false);
+        final EditText nameInput = viewInflated.findViewById(R.id.account_name);
+
+        nameInput.setText(name);
+
+        builder.setView(viewInflated);
+
+        builder.setPositiveButton("Update", (dialog, id) -> {
+            String newName = nameInput.getText().toString();
+            account.setName(newName);
+            accountRepository.updateAccount(Integer.parseInt(account.getId()), account);
+            dialog.dismiss();
+            adapter.updateData(accountRepository.getItems());
+            adapter.notifyDataSetChanged();
+        });
+
+        builder.setNegativeButton("Cancel", (dialog, id) -> dialog.cancel());
+
+        AlertDialog dialog = builder.create();
+        dialog.show();
+    }
+
+
+    public void deleteAccount(Integer id) {
+        accountRepository.deleteById(id);
+
+        informationRepository.deleteByAccountId(id);
+        adapter.updateData(accountRepository.getItems());
+        adapter.notifyDataSetChanged();
     }
 }

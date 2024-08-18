@@ -16,7 +16,7 @@ public class AccountRepository {
     }
 
     public Account findById(int id) {
-        throw new RuntimeException("not implemented");
+        return accountDataSource.getAccount(id);
     }
     public List<Account> findAllByName(String name) {
         throw new RuntimeException("not implemented");
@@ -25,10 +25,10 @@ public class AccountRepository {
         throw new RuntimeException("not implemented");
     }
     public void deleteById(int id) {
-        throw new RuntimeException("not implemented");
+        accountDataSource.deleteAccount(id);
     }
     public void updateAccount(int id, Account account) {
-        throw new RuntimeException("not implemented");
+        accountDataSource.updateAccount(id, account.getName(), account.getCount());
     }
 
     public void addAccount(String name) {
@@ -59,10 +59,6 @@ public class AccountRepository {
 
     public void deleteAccount(long id) {
         accountDataSource.deleteAccount(id);
-    }
-
-    public void updateAccount(long id, Account account) {
-        accountDataSource.updateAccount(id, "", 0);
     }
 
     public List<Account> findByName(String text) {

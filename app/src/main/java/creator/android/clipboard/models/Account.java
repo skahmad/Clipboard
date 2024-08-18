@@ -8,6 +8,7 @@ public class Account {
     private String updatedAt = "";
 
 
+    // todo remove id parameter form constructor
     public Account(String id, String name) {
         this.id = id;
         this.name = name;
