@@ -23,7 +23,7 @@ import creator.android.clipboard.models.Information;
 
 public class InformationAdapter extends RecyclerView.Adapter<InformationAdapter.ViewHolder> {
     private List<Information> items;
-    private Context context;
+    private final Context context;
     InformationActivity informationActivity;
     private InformationRepository informationRepository;
 
@@ -36,7 +36,9 @@ public class InformationAdapter extends RecyclerView.Adapter<InformationAdapter.
     @NonNull
     @Override
     public InformationAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_item_two_line, parent, false);
+        View view = LayoutInflater
+                .from(parent.getContext())
+                .inflate(R.layout.list_item_two_line, parent, false);
         return new InformationAdapter.ViewHolder(view);
     }
 
@@ -55,13 +57,10 @@ public class InformationAdapter extends RecyclerView.Adapter<InformationAdapter.
             Toast.makeText(context, "Copied to clipboard", Toast.LENGTH_SHORT).show();
         });
 
-        holder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
-            @Override
-            public boolean onLongClick(View v) {
-                v.setTag(item);
-                v.showContextMenu();
-                return true;
-            }
+        holder.itemView.setOnLongClickListener(v -> {
+            v.setTag(item);
+            v.showContextMenu();
+            return true;
         });
     }
 

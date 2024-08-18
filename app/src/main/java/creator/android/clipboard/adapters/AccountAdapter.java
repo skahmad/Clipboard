@@ -20,8 +20,6 @@ public class AccountAdapter extends RecyclerView.Adapter<AccountAdapter.ViewHold
     private List<Account> items;
     private Context context;
 
-    // Constructor
-    // Constructor
     public AccountAdapter(Context context, List<Account> items) {
         this.context = context;
         this.items = items;
@@ -49,19 +47,13 @@ public class AccountAdapter extends RecyclerView.Adapter<AccountAdapter.ViewHold
         holder.itemView.setTag(position);
 
         // Set a click listener on the entire item view
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // Create an intent to start the ContactDetailsActivity
-                Intent intent = new Intent(context, InformationActivity.class);
-                //Intent intent = new Intent(context, AccountDetailsActivity.class);
-                intent.putExtra("name", item.getName());
-                intent.putExtra("count", item.getCount());
-                intent.putExtra("accountId", item.getId());
-
-                System.out.println(item.getName() + ":" + item.getId());
-                context.startActivity(intent);
-            }
+        holder.itemView.setOnClickListener(v -> {
+            // Create an intent to start the ContactDetailsActivity
+            Intent intent = new Intent(context, InformationActivity.class);
+            intent.putExtra("name", item.getName());
+            intent.putExtra("count", item.getCount());
+            intent.putExtra("accountId", item.getId());
+            context.startActivity(intent);
         });
     }
 
@@ -70,12 +62,7 @@ public class AccountAdapter extends RecyclerView.Adapter<AccountAdapter.ViewHold
         return items.size();
     }
 
-    // Interface for handling clicks
-    public interface OnItemClickListener {
-        void onItemClick(int position);
-    }
-
-    public class ViewHolder extends RecyclerView.ViewHolder {
+    public static class ViewHolder extends RecyclerView.ViewHolder {
         TextView text1;
         TextView text2;
 

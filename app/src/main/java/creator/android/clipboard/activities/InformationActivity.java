@@ -47,10 +47,6 @@ public class InformationActivity extends AppCompatActivity {
         MaterialToolbar toolbar = findViewById(R.id.information_toolbar);
         setSupportActionBar(toolbar);
 
-        binding.fab.setOnClickListener(view -> Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                .setAnchorView(R.id.fab)
-                .setAction("Action", null).show());
-
         // Get the intent that started this activity and extract the contact details
         Intent intent = getIntent();
         if(intent != null) {
@@ -84,7 +80,7 @@ public class InformationActivity extends AppCompatActivity {
         // create search view
         MenuItem searchItem = menu.findItem(R.id.action_search_information);
         SearchView searchView = (SearchView) searchItem.getActionView();
-        searchView.setQueryHint("Search infromation");
+        searchView.setQueryHint("Search information");
 
 
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
